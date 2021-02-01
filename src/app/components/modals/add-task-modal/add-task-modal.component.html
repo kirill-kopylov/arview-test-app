@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Добавить событие</h1>
+<div mat-dialog-content>
+  <form [formGroup]="taskForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Название события</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Типа события</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let taskType of taskTypes" [value]="taskType.value">
+          {{taskType.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="this.taskForm.get('type')?.value === TASK_TYPES.holiday">
+      <mat-form-field appearance="outline">
+        <mat-label>Сумма $</mat-label>
+        <input matInput formControlName="cost" type="number">
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="this.taskForm.get('type')?.value === TASK_TYPES.event">
+      <mat-form-field appearance="outline">
+        <mat-label>Адрес</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Время</mat-label>
+        <input matInput formControlName="time">
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="this.taskForm.get('type')?.value === TASK_TYPES.other">
+      <mat-form-field appearance="outline">
+        <mat-label>Описание</mat-label>
+        <input matInput formControlName="other">
+      </mat-form-field>
+    </ng-container>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Отмена</button>
+  <button mat-button [disabled]="!taskForm.valid" (click)="save()">Сохранить</button>
+</div>
